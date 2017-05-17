@@ -1,0 +1,11 @@
+Numpad:
+inp=[2,3,5]
+out = [26,19,13,6]
+Door Servo:21
+Door IR1: 12
+Garrage door servo:17
+IR2 (inside): 27
+IR3 (car): 22
+bell: 7
+
+
