@@ -2,7 +2,21 @@
  
 import socket, select
 import serial_led
- 
+import codecs
+import sys
+sys.path.append('/home/pi/Desktop/autoh')
+
+from dbconnect import connect
+
+def dbpref(col=[], pin=[]):
+	cursor = connect()
+	col = col[0]+col[1]
+	pin = pin[0]+pin[1]+pin[2]+pin[3]
+	query = "select "+col+" from pref where pin='"+pin+"'"
+	cursor.execute(query)
+	print "reached here"
+	data = cursor.fetchone()
+	return str(data[0])
  
 def main():
 	# List to keep track of socket descriptors
@@ -13,7 +27,7 @@ def main():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # this has no effect, why ?
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind(("192.168.1.12", PORT))
+    server_socket.bind(("192.168.1.11", PORT))
     server_socket.listen(10)
  
     # Add server socket to the list of readable connections
@@ -38,14 +52,43 @@ def main():
             else:
                 # Data recieved from client, process it
                 try:
+					serialdata=""
                     #In Windows, sometimes when a TCP program closes abruptly,
                     # a "Connection reset by peer" exception will be thrown
-                    data = sock.recv(RECV_BUFFER)
-                    print data
-                    if data:
-						if data[0]=='0' or data[0]=='1' or data[0]=='2' or data[0]=='3' or data[0]=='4' or data[0]=='5':
-							serial_led.serialControl(data)
-                 
+					data = sock.recv(RECV_BUFFER)
+					print data
+					if len(data)>1:
+						serialdata=""
+						if data[:2]=="l1":
+							serialdata+="2"	
+						elif data[:2]=="l2":	
+							serialdata+="3"
+						elif data[:2]=="l3"	:
+							serialdata+="4"
+						elif data[:2]=="f1"	:
+							serialdata+="6"
+						elif data[:2]=="f2"	:
+							serialdata+="7"	
+						elif data[:2]=="d1"	:
+							"""func"""
+						elif data[:2]=="d2"	:
+							"""funtion"""	
+	
+						if data[2]=="0":
+							serialdata+="255"
+						elif data[2]=="1":
+							s= dbpref(data[:2],data[3:])
+							serialdata+=s
+						if(len(serialdata)==2):
+							serialdata=serialdata[0]+"00"+seriadata[1:]
+						elif(len(serialdata)==3):
+							serialdata=serialdata[0]+"0"+serialdata[1:]
+						
+						print serialdata			
+						serial_led.serialControl(serialdata)
+						
+						
+							
                 except:
                     print "Client (%s, %s) is offline" % addr
                     sock.close()
