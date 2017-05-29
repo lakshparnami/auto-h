@@ -13,7 +13,11 @@ $query = "delete from user where pin='$pin'";
 $result = mysqli_query($con,$query);
 
 if($result){
-	echo "User Successfully Deleted";
+	$query = "delete from pref where pin='$pin'";
+	$result = mysqli_query($con,$query);
+	if($result){
+		echo "User Successfully Deleted";
+	}
 }
 else{
 	echo "Problem in Deletion. Probably coder's fault..";

@@ -8,7 +8,7 @@
 	
 		die("Cannot setup connection: ". mysqli_connect_error());
 	}
-	$query = "select * from current_status";
+	$query = "select * from log";
 	$result = mysqli_query($con,$query);
 	$rows = array();
 	while($r = mysqli_fetch_assoc($result)) {

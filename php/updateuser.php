@@ -14,14 +14,14 @@ if(!$con){
 	die("Cannot setup connection: ". mysqli_connect_error());
 }
 
-$query = "update user set email='$email' and name='$name' and phone='$phone' and auth='$auth' and pin='$newpin' where pin='$oldpin'";
+$query = "update user set email='$email' , name='$name' , phone='$phone' , admin='$auth' , pin='$newpin' where pin='$oldpin'";
 $result = mysqli_query($con,$query);
 
 if($result){
 	echo "Successfully updated";
 }
 else{
-	echo "Problem in updation. Probably coder's fault..";
+	echo "$query";
 }
 
 
