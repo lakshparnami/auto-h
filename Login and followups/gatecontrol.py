@@ -38,10 +38,13 @@ def CheckRoom2Door(irpin,servopin):
 	openDoor(27,servopin)
 	
 
-'''def main():
+def main():
 	setupGPIO(22,17)	
-	CheckRoom2Door(22,17)
+	if(input()==1):
+		openDoor(22,17)
+	else:
+		closeDoor(17) 
 
 if __name__ =='__main__':
-	main()'''
+	main()
 

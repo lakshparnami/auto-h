@@ -60,7 +60,7 @@ def con():
 	global server_socket
 	server_socket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
-	server_socket.bind(("192.168.1.12",PORT))
+	server_socket.bind(("192.168.1.11",PORT))
 	server_socket.listen(10)
 
 	CONNECTION_LIST.append(server_socket)
