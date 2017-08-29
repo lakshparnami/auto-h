@@ -4,7 +4,7 @@ Voice and App Controlled Home Automation
 Hello guys,
 We have tried our hand building a home automation service controlled both through Android and Voice.
 
-For voice we used the service JASPER.
+For voice we used the service JASPER.  
 Files for RASPBERRY PI (programming language : python) , ARDUINO (using arduino IDE) JASPER and the ANDROID APK file are listed 
 above. 
 
